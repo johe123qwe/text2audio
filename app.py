@@ -26,7 +26,7 @@ class Text2audio(QMainWindow):
         self.CharacterBox.addItems(text['types'])
 
         self.ChangeSpeed = QComboBox()
-        self.ChangeSpeed.addItems(["-50%", "-40%", "-30%", "-20%", "-10%", "0%", "10%", "20%", "30%", "40%", "50%"])
+        self.ChangeSpeed.addItems(["-50%", "-40%", "-30%", "-20%", "-10%", "+0%", "+10%", "+20%", "+30%", "+40%", "+50%"])
 
         GenerButton = QPushButton("生成音频")
         exitButton = QPushButton("退出")
