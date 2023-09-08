@@ -1,21 +1,18 @@
 """
 文字转音频
 """
-
 import sys
-from PyQt6.QtWidgets import (QMainWindow, QPushButton, QHBoxLayout, 
-                             QVBoxLayout, QApplication, QTextEdit,
-                             QMessageBox, QWidget, QComboBox)
+from PyQt5.QtWidgets import (QMainWindow, QPushButton, QHBoxLayout, 
+                             QVBoxLayout, QApplication,
+                             QMessageBox, QWidget, QComboBox, QPlainTextEdit)
+from PyQt5.QtGui import QIcon
 import asyncio
 import tools
 import os
 import time
 import json
 
-
-download_dir = os.path.expanduser("~/Downloads")
-print(download_dir)
-
+root_path = os.path.join(os.path.dirname(__file__))
 class Example(QMainWindow):
 
     def __init__(self):
@@ -24,9 +21,10 @@ class Example(QMainWindow):
         self.initUI()
 
     def initUI(self):
-
+        QApplication.instance().setWindowIcon(
+            QIcon(os.path.join(root_path, 'src', 'logo.png')))
         self.CharacterBox = QComboBox()
-        with open('src/audio_type.json', "r", encoding="utf-8") as f:
+        with open(os.path.join(root_path, 'src', 'audio_type.json'), "r", encoding="utf-8") as f:
                 text = json.load(f)
         self.CharacterBox.addItems(text['types'])
 
@@ -36,7 +34,7 @@ class Example(QMainWindow):
         exitButton.clicked.connect(self.exit_app)
         GenerButton.clicked.connect(self.t2a)
 
-        self.textEdit = QTextEdit()
+        self.textEdit = QPlainTextEdit()
         vbox = QVBoxLayout()
 
         vbox.addWidget(self.textEdit)
@@ -59,7 +57,6 @@ class Example(QMainWindow):
 
     def read_textEdit(self):
         text = self.textEdit.toPlainText()
-        print(text)
         return text
 
     def select_voice(self):
@@ -68,6 +65,7 @@ class Example(QMainWindow):
         return select_type
 
     def output_file(self):
+        download_dir = os.path.expanduser("~/Downloads")
         time_now = time.strftime("%Y%m%d%H%M%S", time.localtime())
         output_file = os.path.join(download_dir, '{}.mp3'.format(time_now))
         return output_file
@@ -85,11 +83,8 @@ class Example(QMainWindow):
     def exit_app(self):
         sys.exit()
 
-def main():
+if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = Example()
     ex.show()
     sys.exit(app.exec())
-
-if __name__ == '__main__':
-    main()

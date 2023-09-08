@@ -12,22 +12,18 @@ def read_file(file) -> str:
     with open (file, 'r') as f:
          return f.read()
 
-# TEXT = read_file('test.txt')
-# VOICE = "zh-CN-XiaoxiaoNeural"
-# VOICE = "bg-BG-BorislavNeural" #   bg-BG-KalinaNeural
-# OUTPUT_FILE = "audio2.mp3"
 
 async def amain(TEXT, VOICE, OUTPUT_FILE) -> None:
     """Main function"""
     communicate = edge_tts.Communicate(TEXT, VOICE)
     await communicate.save(OUTPUT_FILE)
 
-if __name__ == "__main__":
-    loop = asyncio.get_event_loop_policy().get_event_loop()
-    try:
-        loop.run_until_complete(amain(TEXT, VOICE, OUTPUT_FILE))
-    finally:
-        loop.close()
+# if __name__ == "__main__":
+#     loop = asyncio.get_event_loop_policy().get_event_loop()
+#     try:
+#         loop.run_until_complete(amain(TEXT, VOICE, OUTPUT_FILE))
+#     finally:
+#         loop.close()
 
 '''
 Name: af-ZA-AdriNeural
