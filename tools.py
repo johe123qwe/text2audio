@@ -13,9 +13,9 @@ def read_file(file) -> str:
          return f.read()
 
 
-async def amain(TEXT, VOICE, OUTPUT_FILE) -> None:
+async def amain(TEXT, VOICE, OUTPUT_FILE, RATE) -> None:
     """Main function"""
-    communicate = edge_tts.Communicate(TEXT, VOICE)
+    communicate = edge_tts.Communicate(TEXT, VOICE, rate=RATE)
     await communicate.save(OUTPUT_FILE)
 
 # if __name__ == "__main__":

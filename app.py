@@ -13,7 +13,7 @@ import time
 import json
 
 root_path = os.path.join(os.path.dirname(__file__))
-class Example(QMainWindow):
+class Text2audio(QMainWindow):
 
     def __init__(self):
         super().__init__()
@@ -27,6 +27,9 @@ class Example(QMainWindow):
         with open(os.path.join(root_path, 'src', 'audio_type.json'), "r", encoding="utf-8") as f:
                 text = json.load(f)
         self.CharacterBox.addItems(text['types'])
+
+        self.ChangeSpeed = QComboBox()
+        self.ChangeSpeed.addItems(["-50%", "-40%", "-30%", "-20%", "-10%", "0%", "10%", "20%", "30%", "40%", "50%"])
 
         GenerButton = QPushButton("生成音频")
         exitButton = QPushButton("退出")
@@ -48,12 +51,13 @@ class Example(QMainWindow):
         hbox = QHBoxLayout()
         hbox.addStretch(1)
         hbox.addWidget(self.CharacterBox)
+        hbox.addWidget(self.ChangeSpeed)
         hbox.addWidget(GenerButton)
         hbox.addWidget(exitButton)
         vbox.addLayout(hbox)
 
         self.setGeometry(650, 300, 450, 350)
-        self.setWindowTitle('文字转音频1.0')
+        self.setWindowTitle('文字转音频1.1')
 
     def read_textEdit(self):
         text = self.textEdit.toPlainText()
@@ -70,21 +74,22 @@ class Example(QMainWindow):
         output_file = os.path.join(download_dir, '{}.mp3'.format(time_now))
         return output_file
 
+    def speed(self):
+        return self.ChangeSpeed.currentText()
+
     def t2a(self):
         loop = asyncio.get_event_loop_policy().get_event_loop()
         try:
-            loop.run_until_complete(tools.amain(self.read_textEdit(), self.select_voice(), self.output_file()))
+            loop.run_until_complete(tools.amain(self.read_textEdit(), self.select_voice(), self.output_file(), self.speed()))
             QMessageBox.information(self, "生成完成", "音频已生成{}".format(self.output_file()))
         except Exception as e:
             QMessageBox.critical(self, "生成失败", str(e))
-        finally:
-            loop.close()
 
     def exit_app(self):
         sys.exit()
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = Example()
+    ex = Text2audio()
     ex.show()
     sys.exit(app.exec())
