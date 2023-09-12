@@ -26,7 +26,8 @@ class Text2audio(QMainWindow):
         self.CharacterBox.addItems(text['types'])
 
         self.ChangeSpeed = QComboBox()
-        self.ChangeSpeed.addItems(["-50%", "-40%", "-30%", "-20%", "-10%", "+0%", "+10%", "+20%", "+30%", "+40%", "+50%"])
+        self.ChangeSpeed.addItems(["减速-50%", "减速-40%", "减速-30%", "减速-20%", "减速-10%", "正常速度", "加速+10%", "加速+20%", "加速+30%", "加速+40%", "加速+50%"])
+        self.ChangeSpeed.setCurrentIndex(5)
 
         GenerButton = QPushButton("生成音频")
         exitButton = QPushButton("退出")
@@ -54,7 +55,7 @@ class Text2audio(QMainWindow):
         vbox.addLayout(hbox)
 
         self.setGeometry(650, 300, 450, 350)
-        self.setWindowTitle('文字转音频1.1')
+        self.setWindowTitle('文字转音频1.2')
 
     def read_textEdit(self):
         text = self.textEdit.toPlainText()
@@ -72,15 +73,26 @@ class Text2audio(QMainWindow):
         return output_file
 
     def speed(self):
-        return self.ChangeSpeed.currentText()
+        if self.ChangeSpeed.currentText() == "正常速度":
+            select_speed = "+0%"
+        else:
+            select_speed = self.ChangeSpeed.currentText().split("速", 1)[1]
+        return select_speed
 
     def t2a(self):
-        loop = asyncio.get_event_loop_policy().get_event_loop()
-        try:
-            loop.run_until_complete(tools.amain(self.read_textEdit(), self.select_voice(), self.output_file(), self.speed()))
-            QMessageBox.information(self, "生成完成", "音频已生成{}".format(self.output_file()))
-        except Exception as e:
-            QMessageBox.critical(self, "生成失败", str(e))
+        if self.textEdit.toPlainText() == "":
+            QMessageBox.critical(self, "错误", "请输入要转换的文字")
+            return
+        else:
+            self.text2audio = tools.AudioThread()
+            self.text2audio.textcontent = self.read_textEdit()
+            self.text2audio.output_file = self.output_file()
+            self.text2audio.speed = self.speed()
+            self.text2audio.voicetype = self.select_voice()
+            self.text2audio.audio.connect(self.textEdit.appendPlainText)
+            scrollbar = self.textEdit.verticalScrollBar()
+            scrollbar.setValue(scrollbar.maximum())
+            self.text2audio.start()
 
     def exit_app(self):
         sys.exit()
