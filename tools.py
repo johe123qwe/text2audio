@@ -3,7 +3,6 @@ import asyncio
 import edge_tts
 from PyQt5.QtCore import QThread
 from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtWidgets import QMessageBox
 
 
 def read_file(file) -> str:
