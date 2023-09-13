@@ -1,7 +1,3 @@
-"""
-Basic example of edge_tts usage.
-"""
-
 import asyncio
 
 import edge_tts
@@ -39,8 +35,8 @@ class AudioThread(QThread):
 
     def run(self) -> None:
         self.audio.emit('\n音频生成中, 请稍后...')
-        loop = asyncio.new_event_loop()  # 创建新的事件循环
-        asyncio.set_event_loop(loop)  # 设置为当前事件循环
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
         try:
             loop.run_until_complete(amain(self.textcontent, self.voicetype, self.output_file, self.speed))
             # print('音频已生成 {}'.format(self.output_file))

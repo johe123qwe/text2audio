@@ -3,7 +3,6 @@ from PyQt5.QtWidgets import (QMainWindow, QPushButton, QHBoxLayout,
                              QVBoxLayout, QApplication,
                              QMessageBox, QWidget, QComboBox, QPlainTextEdit)
 from PyQt5.QtGui import QIcon
-import asyncio
 import tools
 import os
 import time
@@ -42,7 +41,6 @@ class Text2audio(QMainWindow):
         vbox.addWidget(self.textEdit)
         self.textEdit.setPlaceholderText("请输入要转换的文字")
 
-        # 创建一个 QWidget 作为中心小部件，将 vbox 设置为其布局
         central_widget = QWidget()
         central_widget.setLayout(vbox)
         self.setCentralWidget(central_widget)
