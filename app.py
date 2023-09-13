@@ -22,8 +22,9 @@ class Text2audio(QMainWindow):
             QIcon(os.path.join(root_path, 'src', 'logo.png')))
         self.CharacterBox = QComboBox()
         with open(os.path.join(root_path, 'src', 'audio_type.json'), "r", encoding="utf-8") as f:
-                text = json.load(f)
+            text = json.load(f)
         self.CharacterBox.addItems(text['types'])
+        self.CharacterBox.setCurrentIndex(287)
 
         self.ChangeSpeed = QComboBox()
         self.ChangeSpeed.addItems(["减速-50%", "减速-40%", "减速-30%", "减速-20%", "减速-10%", "正常速度", "加速+10%", "加速+20%", "加速+30%", "加速+40%", "加速+50%"])
@@ -59,7 +60,11 @@ class Text2audio(QMainWindow):
 
     def read_textEdit(self):
         text = self.textEdit.toPlainText()
-        return text
+        if text.find('音频生成中, 请稍后...') != -1:
+            text = text[:text.find('音频生成中, 请稍后...')]
+            return text
+        else:
+            return text
 
     def select_voice(self):
         select_voice = self.CharacterBox.currentText()

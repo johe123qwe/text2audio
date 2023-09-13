@@ -43,7 +43,7 @@ class AudioThread(QThread):
         asyncio.set_event_loop(loop)  # 设置为当前事件循环
         try:
             loop.run_until_complete(amain(self.textcontent, self.voicetype, self.output_file, self.speed))
-            print('音频已生成 {}'.format(self.output_file))
+            # print('音频已生成 {}'.format(self.output_file))
             self.audio.emit('\n音频已生成 {}'.format(self.output_file))
         except Exception as e:
             print(e)
