@@ -41,5 +41,4 @@ class AudioThread(QThread):
             # print('音频已生成 {}'.format(self.output_file))
             self.audio.emit('\n音频已生成 {}'.format(self.output_file))
         except Exception as e:
-            print(e)
             self.audio.emit("生成失败{}".format(str(e)))
