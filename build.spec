@@ -25,7 +25,7 @@ if platform.system() == "Darwin":
               a.scripts,
               [],
               exclude_binaries=True,
-              name='txt2au',
+              name='文字转音频',
               debug=False,
               bootloader_ignore_signals=False,
               strip=False,
@@ -38,11 +38,11 @@ if platform.system() == "Darwin":
                   strip=False,
                   upx=True,
                   upx_exclude=[],
-                  name='txt2au')
+                  name='文字转音频')
 
     app = BUNDLE(
         coll,
-        name='txt2au.app',
+        name='文字转音频.app',
         icon='./src/app.icns',
         bundle_identifier=None,
     )
@@ -70,7 +70,7 @@ elif platform.system() == "Windows":
         a.scripts,
         [],
         exclude_binaries=True,
-        name='txt2au',
+        name='文字转音频',
         debug=False,
         bootloader_ignore_signals=False,
         strip=False,
@@ -91,5 +91,5 @@ elif platform.system() == "Windows":
         strip=False,
         upx=True,
         upx_exclude=[],
-        name='txt2au',
+        name='文字转音频',
     )

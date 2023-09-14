@@ -7,16 +7,16 @@
 mkdir -p ./dist/dmg
 
 rm -r ./dist/dmg/*
-cp -r "dist/txt2au.app" dist/dmg 
-test -f "dist/txt2au.dmg" && rm "dist/txt2au.dmg"
+cp -r "dist/文字转音频.app" dist/dmg 
+test -f "dist/文字转音频.dmg" && rm "dist/文字转音频.dmg"
 create-dmg \
-  --volname "txt2au" \
-  --volicon "./icon/app.icns" \
+  --volname "文字转音频" \
+  --volicon "./src/app.icns" \
   --window-pos 200 120 \
   --window-size 600 300 \
   --icon-size 100 \
-  --icon "txt2au.app" 175 120 \
-  --hide-extension "txt2au.app" \
+  --icon "文字转音频.app" 175 120 \
+  --hide-extension "文字转音频.app" \
   --app-drop-link 425 120 \
-  "dist/txt2au.dmg" \
+  "dist/文字转音频.dmg" \
   "dist/dmg/"

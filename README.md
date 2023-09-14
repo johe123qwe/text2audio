@@ -24,4 +24,4 @@ python build.spec
 
 ## License
 
-txt2au is licensed under [GPLv3](./LICENSE).
+文字转音频 is licensed under [GPLv3](./LICENSE).
